@@ -6,14 +6,12 @@ import {MockV3Aggregator} from "test/mocks/MockV3Aggregator.sol";
 import {ERC20Mock} from "test/mocks/ERC20Mock.sol";
 
 contract HelperConfig is Script {
-    
-
     struct NetworkConfig {
         address wethUsdPriceFeed;
         address wbtcUsdPriceFeed;
         address weth;
         address wbtc;
-        uint256 deployerKey;        
+        uint256 deployerKey;
     }
 
     uint8 public constant DECIMALS = 8;
@@ -47,21 +45,11 @@ contract HelperConfig is Script {
             return activeNetworkConfig;
         }
         vm.startBroadcast();
-        MockV3Aggregator ethUsdPriceFeed = new MockV3Aggregator({
-            _decimals: DECIMALS,
-            _initialAnswer: ETH_USD_PRICE
-        });
-        ERC20Mock weth = new ERC20Mock({
-            name: "Wrapped Ether",
-            symbol: "WETH",
-            initialAccount: msg.sender,
-            initialBalance: 1000e18
-        });
+        MockV3Aggregator ethUsdPriceFeed = new MockV3Aggregator({_decimals: DECIMALS, _initialAnswer: ETH_USD_PRICE});
+        ERC20Mock weth =
+            new ERC20Mock({name: "Wrapped Ether", symbol: "WETH", initialAccount: msg.sender, initialBalance: 1000e18});
 
-        MockV3Aggregator btcUsdPriceFeed = new MockV3Aggregator({
-            _decimals: DECIMALS,
-            _initialAnswer: BTC_USD_PRICE
-        });
+        MockV3Aggregator btcUsdPriceFeed = new MockV3Aggregator({_decimals: DECIMALS, _initialAnswer: BTC_USD_PRICE});
 
         ERC20Mock wbtc = new ERC20Mock({
             name: "Wrapped Bitcoin",
@@ -78,6 +66,5 @@ contract HelperConfig is Script {
             wbtc: address(wbtc),
             deployerKey: DEFAULT_ANVIL_KEY
         });
-
     }
 }
